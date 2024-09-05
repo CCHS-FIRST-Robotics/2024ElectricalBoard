@@ -11,9 +11,10 @@ public class Challenges extends Command {
     
     private MotorIOTalonFX io;
     private Motor motor;
-    private double percent = 1d;//percent of voltage using
+    private double percent = 0.5d;//percent of voltage using
     private int time = 0;// ticks
-    private int seconds = 10;// amt of seconds to go from 0 to 12
+    private final int seconds = 10;// amt of seconds to go from 0 to 12
+    private int ticks = 50 * seconds;
     boolean incresing = true;
     
     public Challenges(){
@@ -30,8 +31,9 @@ public class Challenges extends Command {
         motor.setVoltage(percent * time * 12d/(50d * seconds));
         if(incresing) time++;
         else time--;
-        if (incresing && time == 50 * seconds) incresing = false;
-        else if (!incresing && time == 0) incresing = true;
+
+        if (time == ticks) incresing = false;
+        else if (time == 0) incresing = true;
 
         
         
