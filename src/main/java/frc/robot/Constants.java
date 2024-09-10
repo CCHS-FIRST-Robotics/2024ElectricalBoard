@@ -14,7 +14,7 @@ public final class Constants {
 
     public static int TALONFX_ID = 0;
     public static int SPARKMAX_ID = 1;
-    public static int TALONSRX_ID_1 = 5;
+    public static int TALONSRX_ID_1 = 2;
     public static int TALONSRX_ID_2 = 3;
 
     // ! probably not called ids
