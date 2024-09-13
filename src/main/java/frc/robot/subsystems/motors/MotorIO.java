@@ -15,6 +15,22 @@ public interface MotorIO {
     public default void setVoltage(double volts) {
     }
 
+    public default double getPosition(){
+        return 0.0;
+    }
+
+
+    public default void resetPosition(int posit){
+
+    }
+    
+
+
+
+
+
+
+
     public default void updateInputs(MotorIOInputs inputs) {
     }
 }

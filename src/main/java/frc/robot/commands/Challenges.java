@@ -1,57 +1,37 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.motors.Motor;
-// import frc.robot.subsystems.motors.
 import frc.robot.subsystems.motors.MotorIOTalonFX;
 import frc.robot.Constants;
 
 public class Challenges extends Command {
-    
-    
+
     private MotorIOTalonFX io;
     private Motor motor;
-    private double percent = 0.5d;//percent of voltage using
-    private int time = 0;// ticks
-    private final int seconds = 10;// amt of seconds to go from 0 to 12
-    private int ticks = 50 * seconds;
-    boolean incresing = true;
-    
-    public Challenges(){
+    private PIDController pid; 
+    private double kP = 1.0;
+    private double kI = 0.0;
+    private double kD = 0.0;
+    private double outputAngle = 90;
 
+    public Challenges() {
         io = new MotorIOTalonFX(Constants.TALONFX_ID);
-        motor  = new Motor(io);
-        
-
-
-    
-
-    }
-    public void dostuff(){
-        motor.setVoltage(percent * time * 12d/(50d * seconds));
-        if(incresing) time++;
-        else time--;
-
-        if (time == ticks) incresing = false;
-        else if (time == 0) incresing = true;
-
-        
-        
-
-
-
-        
-        
+        motor = new Motor(io);
+        pid = new PIDController(kP, kI, kD);
+        motor.resetPosition(0); // Assuming resetPosition does not take parameters
     }
 
     @Override
-    public void execute(){
-        dostuff();
-        
-        
-        
-        
+    public void execute() {
+        double currentPosition = motor.getPosition();
+        double output = pid.calculate(currentPosition, outputAngle);
+        motor.setVoltage(output); // Assuming setVoltage is the correct method
+    }
 
-
+    @Override
+    public boolean isFinished() {
+        return pid.atSetpoint(); // Check if the PID controller is at the setpoint
     }
 }

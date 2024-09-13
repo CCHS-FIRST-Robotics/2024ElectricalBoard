@@ -13,7 +13,7 @@ public class MotorIOTalonFX implements MotorIO {
     private StatusSignal<Double> velocitySignal;
     private StatusSignal<Double> temperatureSignal;
     
-    public MotorIOTalonFX(int id){
+    public MotorIOTalonFX(int id) {
         motor = new TalonFX(id);
 
         voltageSignal = motor.getMotorVoltage();
@@ -29,13 +29,22 @@ public class MotorIOTalonFX implements MotorIO {
     }
 
     @Override
+    public double getPosition() {
+        return positionSignal.getValue();
+    }
+
+    public void resetPosition(int posit) {
+        motor.setPosition(posit);
+    }
+
+    @Override
     public void updateInputs(MotorIOInputs inputs) {
         BaseStatusSignal.refreshAll(voltageSignal, currentSignal, positionSignal, velocitySignal, temperatureSignal);
 
-        inputs.motorCurrent = voltageSignal.getValue();
-        inputs.motorVoltage = currentSignal.getValue();
-        inputs.motorPosition = positionSignal.getValue();
-        inputs.motorVelocity = temperatureSignal.getValue();
-        inputs.motorTemperature = temperatureSignal.getValue();
+        inputs.motorVoltage = voltageSignal.getValue();  // Fixed: Motor voltage
+        inputs.motorCurrent = currentSignal.getValue();  // Fixed: Motor current
+        inputs.motorPosition = positionSignal.getValue();  // Correctly assigned
+        inputs.motorVelocity = velocitySignal.getValue();  // Fixed: Motor velocity
+        inputs.motorTemperature = temperatureSignal.getValue();  // Correctly assigned
     }
 }

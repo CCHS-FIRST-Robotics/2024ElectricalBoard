@@ -15,4 +15,15 @@ public class Motor {
     public void setVoltage(double volts){
         io.setVoltage(volts);
     }
+
+    public double getPosition(){
+        return io.getPosition();
+    }
+
+    public void resetPosition(int posit){
+        io.resetPosition(posit);
+    }
+
+
+    
 }
