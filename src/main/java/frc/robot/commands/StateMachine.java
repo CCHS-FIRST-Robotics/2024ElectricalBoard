@@ -14,11 +14,12 @@ public class StateMachine extends Command {
     Motor motor = new Motor(Io);
     
     
-    final static int SPEEDUP_COUNT = 3000 / 20;
-    final static int HOLD_COUNT = 1000 / 20;
-    final static int SLOWDOWN_COUNT = 2000 / 20;
-    final static float STEP_SIZE = 12 / SPEEDUP_COUNT;
-    final static float SLOWDOWN_SIZE = 12 / SLOWDOWN_COUNT;
+    private static final int SPEEDUP_COUNT = 3000 / 20;
+    private static final int HOLD_COUNT = 1000 / 20;
+    private static final int SLOWDOWN_COUNT = 2000 / 20;
+    private static final int IDOL_COUNT = 2000 / 20;
+    private static final float STEP_SIZE = 12 / (float) SPEEDUP_COUNT;
+    private static final float SLOWDOWN_SIZE = 12 / (float) SLOWDOWN_COUNT;
 
     public enum State {IDLE, SPEEDUP, HOLD, SLOWDOWN};
     State m_state;
@@ -34,17 +35,12 @@ public class StateMachine extends Command {
 
     }
 
-
-    
-    
-
-    
     
     /** Called once at the beginning of the robot program. */
     @Override
     public void initialize() {
-        m_state = State.SPEEDUP;
-        m_counter = SPEEDUP_COUNT;
+        m_state = State.IDLE;
+        m_counter = IDOL_COUNT;
         System.out.println("m_counter"+ m_counter);
     }
 
@@ -60,13 +56,20 @@ public class StateMachine extends Command {
         switch(m_state) {
             case IDLE: 
                 System.out.println("IDLE");
-                m_counter = SPEEDUP_COUNT;
-                m_state = State.SPEEDUP;
+                 if (m_counter == 0)
+                {
+                    m_state = State.SPEEDUP;
+                    m_counter = SPEEDUP_COUNT;
+                }
+                else m_counter--;
                 break;
+                
+                
 
             case SPEEDUP:
                 System.out.println("SPEEDUP");
-                motorvoltage += (SPEEDUP_COUNT);
+                motorvoltage += (STEP_SIZE);
+                motorvoltage = Math.min(motorvoltage, 12);
                 if (m_counter == 0)
                 {
                     m_state = State.HOLD;
@@ -87,7 +90,8 @@ public class StateMachine extends Command {
 
             case SLOWDOWN:
                 System.out.println("SLOWDOWN");
-                motorvoltage += SLOWDOWN_SIZE;
+                motorvoltage -= SLOWDOWN_SIZE;
+                motorvoltage = Math.max(motorvoltage, 0); // Prevent going below 0V
                 if (m_counter == 0)
                 {
                     m_state = State.IDLE;
