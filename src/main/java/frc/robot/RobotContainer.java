@@ -7,11 +7,18 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.commands.*;
 import frc.robot.subsystems.motors.*;
 import frc.robot.subsystems.pneumatics.*;
 
-public class RobotContainer {
+public class RobotContainer extends TimedRobot {
+    final static int SPEEDUP_COUNT = 3000 / Constants.INTERVAL;
+    final static int HOLD_COUNT = 1000 / Constants.INTERVAL;
+    final static int SLOWDOWN_COUNT = 3000 / Constants.INTERVAL;
+    public enum State {IDLE, SPEEDUP, HOLD, SLOWDOWN};
+    State m_state;
+    int m_counter = 0;
     CommandXboxController controller = new CommandXboxController(Constants.CONTROLLER_PORT);
 
     Trigger nintendo1 = new Trigger(new DigitalInput(Constants.SWITCH_PORT_1)::get);
@@ -19,8 +26,8 @@ public class RobotContainer {
     Trigger irSensor = new Trigger(new DigitalInput(Constants.IR_SENSOR_PORT)::get);
 
     FourMotors motors = new FourMotors(
-        new Motor( new MotorIOTalonSRX(Constants.TALONFX_ID)), // kraken
-        new Motor(new MotorIOTalonSRX(Constants.SPARKMAX_ID)), // neo
+        new Motor(new MotorIOTalonFX(Constants.TALONFX_ID)), // kraken
+        new Motor(new MotorIOSparkMax(Constants.SPARKMAX_ID)), // neo
         new Motor(new MotorIOTalonSRX(Constants.TALONSRX_ID_1)), // cim1
         new Motor(new MotorIOTalonSRX(Constants.TALONSRX_ID_2)) // cim2
     );
@@ -29,7 +36,7 @@ public class RobotContainer {
     public RobotContainer() {
       configureBindings();
     }
-
+    
     private void configureBindings() {
         //-----Motors-----//
 
@@ -45,10 +52,9 @@ public class RobotContainer {
         );
 
         // button controls
-        controller.x().onTrue(new InstantCommand(() -> {
-            Command challenges = new Challenges();
-            challenges.schedule(); // Schedule the command to run
-        }));
+        controller.x().onTrue(new StateMachine(1));
+        
+            
 
         
         //-----Pneumatics-----//

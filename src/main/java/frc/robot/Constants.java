@@ -20,4 +20,5 @@ public final class Constants {
     // ! probably not called ids
     public static int PISTON_ID_1 = 0;
     public static int PISTON_ID_2 = 1;
+    public static final int INTERVAL = 20;
 }
