@@ -10,11 +10,11 @@ public class FourMotors extends SubsystemBase{
         motors[1] = motor1;
     }
 
-    public void periodic() {
-        for(Motor motor : motors){
-            motor.periodic();
-        }
-    }
+    // public void periodic() {
+    //     for(Motor motor : motors){
+    //         motor.periodic();
+    //     }
+    // }
 
     public void startMotor(int index, double volts){
         motors[index].setVoltage(volts);
