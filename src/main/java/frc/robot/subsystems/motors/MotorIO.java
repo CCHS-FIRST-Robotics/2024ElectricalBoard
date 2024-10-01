@@ -3,6 +3,7 @@ package frc.robot.subsystems.motors;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface MotorIO {
+
     @AutoLog
     public static class MotorIOInputs {
         public double motorCurrent;
@@ -21,15 +22,7 @@ public interface MotorIO {
 
 
     public default void resetPosition(int posit){
-
     }
-    
-
-
-
-
-
-
 
     public default void updateInputs(MotorIOInputs inputs) {
     }
