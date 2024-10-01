@@ -44,7 +44,7 @@ public class RobotContainer {
         );
 
         // button controls
-        controller.x().onTrue(new StateMachine(1));
+        controller.x().onTrue(new StateMachine(2));
         
             
 
