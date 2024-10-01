@@ -6,9 +6,15 @@
   "configurations": [
     {
       "type": "java",
+<<<<<<< HEAD
       "name": "testStatemachine",
       "request": "launch",
       "mainClass": "frc.robot.commands.testStatemachine",
+=======
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "frc.robot.Main",
+>>>>>>> 7c353c2923dbac8047b35cc0900390224dfd2fe1
       "projectName": "2024ElectricalBoard"
     },
     {
