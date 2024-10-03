@@ -20,8 +20,8 @@ public class Motor {
         return io.getPosition();
     }
 
-    public void resetPosition(int posit){
-        io.resetPosition(posit);
+    public void setPosition(double posit){
+        io.setPosition(posit);
     }
 
 

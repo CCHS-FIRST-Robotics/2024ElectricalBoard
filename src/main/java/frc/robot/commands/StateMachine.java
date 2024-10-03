@@ -32,6 +32,7 @@ public class StateMachine extends Command {
     public StateMachine(int cycles) {
         this.stop = cycles;
         this.cycle = 0;
+        //addRequirements(motor);
 
     }
 

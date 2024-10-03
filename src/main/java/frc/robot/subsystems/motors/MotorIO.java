@@ -21,7 +21,7 @@ public interface MotorIO {
     }
 
 
-    public default void resetPosition(int posit){
+    public default void setPosition(double posit){
     }
 
     public default void updateInputs(MotorIOInputs inputs) {
