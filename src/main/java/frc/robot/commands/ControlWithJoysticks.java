@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.Supplier;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.motors.FourMotors;
+import frc.robot.subsystems.motors.TwoMotors;
 
 public class ControlWithJoysticks extends Command{
-    FourMotors motors;
+    TwoMotors motors;
     Supplier<Double> leftXSupplier;
     Supplier<Double> leftYSupplier;
     Supplier<Double> rightXSupplier;
@@ -15,7 +15,7 @@ public class ControlWithJoysticks extends Command{
 
     
     public ControlWithJoysticks(
-        FourMotors motors,
+        TwoMotors motors,
         Supplier<Double> leftXSupplier,
         Supplier<Double> leftYSupplier,
         Supplier<Double> rightXSupplier,

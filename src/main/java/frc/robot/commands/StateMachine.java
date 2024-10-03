@@ -3,15 +3,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-
+import frc.robot.subsystems.motors.TwoMotors;
 import frc.robot.subsystems.motors.Motor;
 import frc.robot.subsystems.motors.MotorIOTalonFX;
+import frc.robot.subsystems.motors.MotorIOTalonSRX;
 
 public class StateMachine extends Command { 
 
 
-    MotorIOTalonFX Io = new MotorIOTalonFX(Constants.TALONFX_ID);
-    Motor motor = new Motor(Io);
+    TwoMotors motors = new TwoMotors(
+        new Motor(new MotorIOTalonFX(Constants.TALONFX_ID)), // kraken
+        new Motor(new MotorIOTalonSRX(Constants.TALONSRX_ID_1)) // cim1
+    );
     
     
     private static final int SPEEDUP_COUNT = 3000 / 20;
@@ -30,7 +33,7 @@ public class StateMachine extends Command {
 
 
     public StateMachine(int cycles) {
-        this.stop = cycles;
+        this.stop = cycles + 1;
         this.cycle = 0;
         //addRequirements(motor);
 
@@ -55,12 +58,16 @@ public class StateMachine extends Command {
         System.out.println("Robot executed at: " + System.currentTimeMillis());
 
         switch(m_state) {
+
+            
             case IDLE: 
                 System.out.println("IDLE");
                  if (m_counter == 0)
                 {
                     m_state = State.SPEEDUP;
                     m_counter = SPEEDUP_COUNT;
+                    this.cycle++;
+                    
                 }
                 else m_counter--;
                 break;
@@ -75,6 +82,8 @@ public class StateMachine extends Command {
                 {
                     m_state = State.HOLD;
                     m_counter = HOLD_COUNT;
+
+            
                 }
                 else m_counter--;
                 break;
@@ -92,18 +101,19 @@ public class StateMachine extends Command {
             case SLOWDOWN:
                 System.out.println("SLOWDOWN");
                 motorvoltage -= SLOWDOWN_SIZE;
-                motorvoltage = Math.max(motorvoltage, 0); // Prevent going below 0V
+                motorvoltage = Math.max(motorvoltage, 0); 
                 if (m_counter == 0)
                 {
                     m_state = State.IDLE;
                     m_counter = IDOL_COUNT;
-                    this.cycle++;
+                   
                 }
                 else m_counter--;
                 break;
            
         }
-         motor.setVoltage(motorvoltage);
+        motors.startMotor(1, motorvoltage);
+        motors.startMotor(2, -motorvoltage);
 
     }
 

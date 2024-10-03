@@ -19,7 +19,7 @@ public class RobotContainer {
     Trigger nintendo2 = new Trigger(new DigitalInput(Constants.SWITCH_PORT_2)::get);
     Trigger irSensor = new Trigger(new DigitalInput(Constants.IR_SENSOR_PORT)::get);
 
-    FourMotors motors = new FourMotors(
+    TwoMotors motors = new TwoMotors(
         new Motor(new MotorIOTalonFX(Constants.TALONFX_ID)), // kraken
         new Motor(new MotorIOTalonSRX(Constants.TALONSRX_ID_1)) // cim1
     );

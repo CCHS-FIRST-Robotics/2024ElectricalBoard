@@ -2,10 +2,10 @@ package frc.robot.subsystems.motors;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class FourMotors extends SubsystemBase{
+public class TwoMotors extends SubsystemBase{
     private Motor[] motors = new Motor[4];
 
-    public FourMotors(Motor motor0, Motor motor1){
+    public TwoMotors(Motor motor0, Motor motor1){
         motors[0] = motor0;
         motors[1] = motor1;
     }
