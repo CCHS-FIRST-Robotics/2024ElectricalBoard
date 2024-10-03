@@ -20,7 +20,7 @@ public class SetPosition extends Command {
         io = new MotorIOTalonFX(Constants.TALONFX_ID);
         motor = new Motor(io);
         pid = new PIDController(kP, kI, kD);
-        motor.resetPosition(3);
+        motor.setPosition(90);
     }
 
     @Override
