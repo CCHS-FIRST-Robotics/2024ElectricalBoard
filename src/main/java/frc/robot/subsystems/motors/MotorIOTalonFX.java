@@ -33,8 +33,8 @@ public class MotorIOTalonFX implements MotorIO {
         return positionSignal.getValue();
     }
 
-    public void resetPosition(int posit) {
-        motor.setPosition(posit);
+    public void setPosition(double deggres) {
+        motor.setPosition(deggres / 360 );
     }
 
     @Override

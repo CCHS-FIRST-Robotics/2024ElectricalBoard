@@ -20,6 +20,10 @@ public class FourMotors extends SubsystemBase{
         motors[index].setVoltage(volts);
     }
 
+    public void setPosition(int index, double posit){
+        motors[index].setPosition(posit);
+    }
+
     public void stopAll(){
         for(Motor motor : motors){
             motor.setVoltage(0);
