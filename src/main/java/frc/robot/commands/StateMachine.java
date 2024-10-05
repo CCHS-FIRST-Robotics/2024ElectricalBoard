@@ -34,6 +34,7 @@ public class StateMachine extends Command {
 
     public StateMachine(int cycles) {
         this.stop = cycles + 1;
+        this.stop = cycles + 1;
         this.cycle = 0;
         //addRequirements(motor);
 
@@ -66,8 +67,6 @@ public class StateMachine extends Command {
                 {
                     m_state = State.SPEEDUP;
                     m_counter = SPEEDUP_COUNT;
-                    this.cycle++;
-                    
                 }
                 else m_counter--;
                 break;
@@ -106,6 +105,7 @@ public class StateMachine extends Command {
                 {
                     m_state = State.IDLE;
                     m_counter = IDOL_COUNT;
+                   
                    
                 }
                 else m_counter--;

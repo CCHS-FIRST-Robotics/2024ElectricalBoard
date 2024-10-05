@@ -44,7 +44,7 @@ public class RobotContainer {
         );
 
         // button controls
-        controller.x().onTrue(new StateMachine(1));
+        controller.x().onTrue(new StateMachine(2));
         controller.y().onTrue(new SetPosition());
         controller.a().onTrue(new InstantCommand(() -> motors.setPosition(0, 90.0)));
         

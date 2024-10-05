@@ -11,7 +11,7 @@ public class SetPosition extends Command {
     private MotorIOTalonFX io;
     private Motor motor;
     private PIDController pid; 
-    private double kP = 1.0;
+    private double kP = 0.01;
     private double kI = 0.0;
     private double kD = 0.0;
     private double outputAngle = 90;
