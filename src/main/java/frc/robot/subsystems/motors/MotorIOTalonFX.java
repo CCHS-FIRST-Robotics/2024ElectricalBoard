@@ -26,6 +26,7 @@ public class MotorIOTalonFX implements MotorIO {
     @Override
     public void setVoltage(double volts) {
         motor.setVoltage(volts);
+        
     }
 
     @Override

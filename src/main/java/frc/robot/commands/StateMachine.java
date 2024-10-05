@@ -59,7 +59,7 @@ public class StateMachine extends Command {
 
         switch(m_state) {
 
-            
+
             case IDLE: 
                 System.out.println("IDLE");
                  if (m_counter == 0)
@@ -112,8 +112,8 @@ public class StateMachine extends Command {
                 break;
            
         }
-        motors.startMotor(1, motorvoltage);
-        motors.startMotor(2, -motorvoltage);
+        motors.startMotor(0, motorvoltage);
+        motors.startMotor(1, -motorvoltage);
 
     }
 

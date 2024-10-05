@@ -1,6 +1,7 @@
 package frc.robot.subsystems.motors;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 
 public class MotorIOTalonSRX implements MotorIO {
@@ -14,6 +15,8 @@ public class MotorIOTalonSRX implements MotorIO {
     public void setVoltage(double volts) {
         motor.set(TalonSRXControlMode.PercentOutput, volts / 12);
     }
+    
+      
 
     @Override
     public void updateInputs(MotorIOInputs inputs) {
