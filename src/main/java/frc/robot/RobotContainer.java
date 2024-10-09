@@ -4,54 +4,52 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.*;
+
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj.DigitalInput;
-import frc.robot.commands.*;
 import frc.robot.subsystems.motors.*;
+import frc.robot.subsystems.arm.*;
 import frc.robot.subsystems.pneumatics.*;
 
 public class RobotContainer {
-   
     CommandXboxController controller = new CommandXboxController(Constants.CONTROLLER_PORT);
 
     Trigger nintendo1 = new Trigger(new DigitalInput(Constants.SWITCH_PORT_1)::get);
     Trigger nintendo2 = new Trigger(new DigitalInput(Constants.SWITCH_PORT_2)::get);
     Trigger irSensor = new Trigger(new DigitalInput(Constants.IR_SENSOR_PORT)::get);
 
-    TwoMotors motors = new TwoMotors(
-        new Motor(new MotorIOTalonFX(Constants.TALONFX_ID)), // kraken
-        new Motor(new MotorIOTalonSRX(Constants.TALONSRX_ID_1)) // cim1
-    );
+    GroupOfMotors motors = new GroupOfMotors();
+    Arm arm = new Arm(new ArmIOSparkMax(Constants.SPARKMAX_ID));
+    
     Pneumatics pneumatics = new Pneumatics(Constants.PISTON_ID_1, Constants.PISTON_ID_2);
 
     public RobotContainer() {
-      configureBindings();
+        motors.addMotor(new Motor(new MotorIOTalonFX(Constants.TALONFX_ID), 0)); // kraken
+
+        configureBindings();
     }
-    
+
     private void configureBindings() {
         //-----Motors-----//
 
         // joystick controls
-        motors.setDefaultCommand(
-            new ControlWithJoysticks(
-                motors,
-                () -> controller.getLeftX(),
-                () -> controller.getLeftY(),
-                () -> controller.getRightX(),
-                () -> controller.getRightY()
-            )
-        );
+        // motors.setDefaultCommand(
+        //     new ControlWithJoysticks(
+        //         motors,
+        //         () -> controller.getLeftX(),
+        //         () -> controller.getLeftY(),
+        //         () -> controller.getRightX(),
+        //         () -> controller.getRightY()
+        //     )
+        // );
 
         // button controls
-        controller.x().onTrue(new StateMachine(2));
-        controller.y().onTrue(new SetPosition());
-        controller.a().onTrue(new InstantCommand(() -> motors.setPosition(0, 90.0)));
-        
-        
-            
+        controller.x().onTrue(new InstantCommand(() -> motors.setMotorPosition(0, Radians.of(Math.random() * 2 * Math.PI))));
+        controller.y().onTrue(new InstantCommand(() -> arm.setPosition(Radians.of(Math.random() * 2 * Math.PI))));
+        controller.a().onTrue(new InstantCommand(() -> motors.toggleMotors()));
 
-        
         //-----Pneumatics-----//
         // controller.b().onTrue(new InstantCommand(() -> pneumatics.togglePiston1()));
         // controller.a().onTrue(new InstantCommand(() -> pneumatics.togglePiston2()));

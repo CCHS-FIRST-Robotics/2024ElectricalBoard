@@ -1,20 +1,23 @@
 
 package frc.robot.commands;
 
+
+import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.subsystems.motors.TwoMotors;
-import frc.robot.subsystems.motors.Motor;
-import frc.robot.subsystems.motors.MotorIOTalonFX;
-import frc.robot.subsystems.motors.MotorIOTalonSRX;
+import frc.robot.subsystems.motors.GroupOfMotors;
+
 
 public class StateMachine extends Command { 
+    GroupOfMotors motors;
 
+    
 
-    TwoMotors motors = new TwoMotors(
-        new Motor(new MotorIOTalonFX(Constants.TALONFX_ID)), // kraken
-        new Motor(new MotorIOTalonSRX(Constants.TALONSRX_ID_1)) // cim1
-    );
+    public StateMachine(GroupOfMotors motors){
+        this.motors = motors; // Initialize instance variable
+        addRequirements(motors);
+
+        
+    }
     
     
     private static final int SPEEDUP_COUNT = 3000 / 20;
@@ -112,8 +115,8 @@ public class StateMachine extends Command {
                 break;
            
         }
-        motors.startMotor(0, motorvoltage);
-        motors.startMotor(1, -motorvoltage);
+        motors.setMotorVoltage(0, Volts.of(motorvoltage));
+        motors.setMotorVoltage(1, Volts.of(-motorvoltage));
 
     }
 

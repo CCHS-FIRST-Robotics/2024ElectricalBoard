@@ -1,29 +1,28 @@
 package frc.robot.subsystems.motors;
 
+import org.littletonrobotics.junction.Logger;
+import edu.wpi.first.units.*;
+
 public class Motor {
     private MotorIO io;
     private MotorIOInputsAutoLogged inputs = new MotorIOInputsAutoLogged();
+    private int index;
 
-    public Motor(MotorIO io) {
+    public Motor(MotorIO io, int index) {
         this.io = io;
+        this.index = index;
     }
 
-    public void periodic(){
-        io.updateInputs(inputs);
-    }
-
-    public void setVoltage(double volts){
+    public void setVoltage(Measure<Voltage> volts){
         io.setVoltage(volts);
     }
 
-    public double getPosition(){
-        return io.getPosition();
+    public void setPosition(Measure<Angle> position){
+        io.setPosition(position);
     }
 
-    public void setPosition(double posit){
-        io.setPosition(posit);
+    public void updateInputs(){
+        io.updateInputs(inputs);
+        Logger.processInputs("motor " + Integer.toString(index), inputs);
     }
-
-
-    
 }
