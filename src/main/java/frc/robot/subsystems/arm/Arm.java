@@ -19,6 +19,7 @@ public class Arm extends SubsystemBase{
     }
 
     public void setPosition(Measure<Angle> position) {
+        Logger.recordOutput("arm/expectedPosit", position);
         io.setPosition(position);
     }
 }

@@ -3,6 +3,8 @@ package frc.robot.subsystems.motors;
 
 import static edu.wpi.first.units.Units.*;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.*;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -63,8 +65,9 @@ public class MotorIOTalonFX implements MotorIO {
 
     @Override
     public void setPosition(Measure<Angle> position){
+        Logger.recordOutput("motor/expectedPosit", position);
         motor.setControl(motorMotionMagicVoltage.withPosition(position.in(Rotations)).withSlot(0));
-        System.out.println(position.in(Rotations));
+        System.out.println(positionSignal.getValue() * 360); // Might be to delayed
     }
 
     @Override

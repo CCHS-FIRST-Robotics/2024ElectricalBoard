@@ -45,8 +45,9 @@ public class ArmIOSparkMax implements ArmIO {
         PIDF.setReference(
             position.in(Rotations),
             CANSparkMax.ControlType.kPosition,
-            0
+            0  
         );
+        System.out.println(encoder.getPosition() * 360);
     }
 
     @Override

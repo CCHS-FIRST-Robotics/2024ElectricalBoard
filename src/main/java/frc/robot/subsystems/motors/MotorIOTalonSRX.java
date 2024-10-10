@@ -25,6 +25,8 @@ public class MotorIOTalonSRX implements MotorIO {
 
     @Override
     public void updateInputs(MotorIOInputs inputs) {
+
+
         inputs.motorCurrent = motor.getStatorCurrent();
         inputs.motorVoltage = motor.getBusVoltage();
         inputs.motorPosition = motor.getSelectedSensorPosition();
