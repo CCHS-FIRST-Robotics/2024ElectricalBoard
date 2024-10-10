@@ -21,6 +21,10 @@ public class Motor {
         io.setPosition(position);
     }
 
+    public double getPosition(){
+        return io.getPosition();
+    }
+
     public void updateInputs(){
         io.updateInputs(inputs);
         Logger.processInputs("motor " + Integer.toString(index), inputs);

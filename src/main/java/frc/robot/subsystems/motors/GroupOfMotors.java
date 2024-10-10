@@ -33,6 +33,10 @@ public class GroupOfMotors extends SubsystemBase{
         motors.get(index).setPosition(position);
     }
 
+    public double getMotorPositsion(int index){
+        return motors.get(index).getPosition();
+    }
+
     public void setAllMotorVoltage(Measure<Voltage> volts){
         for(Motor motor : motors){
             motor.setVoltage(volts);

@@ -19,6 +19,11 @@ public interface MotorIO {
     public default void setPosition(Measure<Angle> position){
     }
 
+    public default double getPosition(){
+        return 0.0;
+    }
+
     public default void updateInputs(MotorIOInputs inputs) {
     }
+
 }

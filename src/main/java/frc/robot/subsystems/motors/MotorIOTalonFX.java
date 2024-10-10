@@ -1,9 +1,6 @@
-
 package frc.robot.subsystems.motors;
 
 import static edu.wpi.first.units.Units.*;
-
-import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.*;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -25,6 +22,8 @@ public class MotorIOTalonFX implements MotorIO {
     private StatusSignal<Double> positionSignal;
     private StatusSignal<Double> velocitySignal;
     private StatusSignal<Double> temperatureSignal;
+
+    Measure<Angle> angle = Radians.of(0);
     
     public MotorIOTalonFX(int id){
         motor = new TalonFX(id);
@@ -35,27 +34,20 @@ public class MotorIOTalonFX implements MotorIO {
         velocitySignal = motor.getVelocity();
         temperatureSignal = motor.getDeviceTemp();
 
-        // ! filler values
-        PIDF.kP = 10;
+        // ! somehow set the starting position as the 0
+
+        PIDF.kP = 20;
         PIDF.kD = 0;
         PIDF.kI = 0;
-        PIDF.kS = 10;
-        PIDF.kV = 1;
+        PIDF.kS = 0;
+        PIDF.kV = 0;
         PIDF.kA = 0;
 
-        motionMagicConfig.MotionMagicCruiseVelocity = 100; // motor max rps
-        motionMagicConfig.MotionMagicAcceleration = 1;
+        motionMagicConfig.MotionMagicCruiseVelocity = 80; // motor max rps
+        motionMagicConfig.MotionMagicAcceleration = 10;
         motionMagicConfig.MotionMagicJerk = 0;
 
         motor.getConfigurator().apply(motorConfig);
-
-        // ! look at this
-        // StatusCode status = StatusCode.StatusCodeNotInitialized;
-        // for (int i = 0; i < 5; ++i) {
-        //     status = motor.getConfigurator().apply(motorConfig);
-        //     if (status.isOK())
-        //         break;
-        // }
     }
 
     @Override
@@ -65,10 +57,16 @@ public class MotorIOTalonFX implements MotorIO {
 
     @Override
     public void setPosition(Measure<Angle> position){
-        Logger.recordOutput("motor/expectedPosit", position);
-        motor.setControl(motorMotionMagicVoltage.withPosition(position.in(Rotations)).withSlot(0));
-        System.out.println(positionSignal.getValue() * 360); // Might be to delayed
+        iteratePosition();
+        // motor.setControl(motorMotionMagicVoltage.withPosition(position.in(Rotations)).withSlot(0));
     }
+
+    public void iteratePosition(){
+        motor.setControl(motorMotionMagicVoltage.withPosition(angle.in(Rotations)).withSlot(0));
+        System.out.println(angle.in(Rotations));
+
+        angle = Radians.of(angle.in(Radians) + Math.PI / 2);
+        }
 
     @Override
     public void updateInputs(MotorIOInputs inputs) {

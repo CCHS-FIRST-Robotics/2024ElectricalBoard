@@ -22,7 +22,6 @@ public class RobotContainer {
 
     GroupOfMotors motors = new GroupOfMotors();
     Arm arm = new Arm(new ArmIOSparkMax(Constants.SPARKMAX_ID));
-    
     Pneumatics pneumatics = new Pneumatics(Constants.PISTON_ID_1, Constants.PISTON_ID_2);
 
     public RobotContainer() {
